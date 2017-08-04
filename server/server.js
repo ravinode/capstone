@@ -13,6 +13,7 @@ app.post('/',(req,res) => {
 });
 
 app.post('/create', (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   var product = new Product({
     name: req.body.name,
     description: req.body.description,
