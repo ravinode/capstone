@@ -11,6 +11,10 @@ var Product = mongoose.model('Product', {
   {
     type: String
   },
+  producturl:
+  {
+    type: String
+  },
   price: {
     type: String
   }
