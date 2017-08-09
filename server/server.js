@@ -41,6 +41,7 @@ app.post('/create', (req, res) => {
   var product = new Product({
     name: req.body.name,
     description: req.body.description,
+    producturl: req.body.producturl,
     category: req.body.category,
     price: req.body.price
   });
