@@ -36,7 +36,7 @@ app.post('/',(req,res) => {
 app.post('/create', (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   console.log("create request from server");
-  console.log("output"+req);
+  console.log("output"+reqgi);
   console.log("resutl is"+req.body.name);
   var product = new Product({
     name: req.body.name,
@@ -44,7 +44,7 @@ app.post('/create', (req, res) => {
     producturl: req.body.producturl,
     category: req.body.category,
     price: req.body.price
-  });
+  }); 
       product.save().then((doc) => {
       res.send(doc)
       }
@@ -58,6 +58,26 @@ app.get('/listProduct',(req,res) => {
 }
 );
 });
+
+app.delete('/delete/:id', (req, res) => {
+  var id = req.params.id;
+  console.log("ID is "+id);
+
+  if (!ObjectID.isValid(id)) {
+    return res.status(404).send();
+  }
+
+  Product.findByIdAndRemove(id).then((todo) => {
+    if (!todo) {
+      return res.status(404).send();
+    }
+
+    res.send(todo);
+  }).catch((e) => {
+    res.status(400).send();
+  });
+});
+
 
 
 app.listen(port, () => {
