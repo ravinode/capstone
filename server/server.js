@@ -58,6 +58,13 @@ app.get('/listProduct',(req,res) => {
 );
 });
 
+app.get('/getCategory', (req, res) => {
+  Product.find().distinct('category').then((result) => {
+    res.send(result);
+  }
+  );
+});
+
 app.delete('/delete/:id', (req, res) => {
   var id = req.params.id;
   console.log("ID is "+id);
