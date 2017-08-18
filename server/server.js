@@ -1,4 +1,5 @@
 var express = require('express');
+const _ = require('lodash')
 var {ObjectID} = require('mongodb');
 var bodyParser = require('body-parser');
 var {mongoose} = require('./db-connect/db-connect');
@@ -85,6 +86,26 @@ app.delete('/delete/:id', (req, res) => {
 });
 
 
+app.patch('/update/:id', (req,res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  var id = req.params.id;
+  console.log(id);
+   var body = _.pick(req.body, ['name', 'description', 'producturl', 'category', 'price']);
+
+   console.log(body);
+
+  Product.findByIdAndUpdate(id, {$set: body}, {new : true }).then((todo) => {
+    if (!todo)
+      {
+      return res.status(404).send();
+      }
+
+      res.send({todo});
+      
+  }).catch((e) => {
+     res.status(404).send();
+  })
+});
 
 app.listen(port, () => {
   console.log(`Started up at port ${port}`);
